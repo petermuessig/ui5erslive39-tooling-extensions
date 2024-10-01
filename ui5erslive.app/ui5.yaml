@@ -1,0 +1,63 @@
+specVersion: "3.0"
+metadata:
+  name: ui5erslive.app
+type: application
+framework:
+  name: OpenUI5
+  version: "1.126.0"
+  libraries:
+    - name: sap.m
+    - name: sap.ui.core
+    - name: themelib_sap_horizon
+builder:
+  #settings:
+  #  includeDependency:
+  #    - "ui5erslive.lib"
+  resources:
+    excludes:
+      - "test/e2e/**"
+  customTasks:
+    - name: ui5-tooling-modules-task
+      afterTask: replaceVersion
+      configuration:
+        addToNamespace: true
+server:
+  customMiddleware:
+    - name: ui5-middleware-ui5
+      afterMiddleware: compression
+    - name: ui5-tooling-modules-middleware
+      afterMiddleware: compression
+    - name: ui5-middleware-servestatic
+      afterMiddleware: compression
+      mountPath: /docs
+      configuration:
+        rootPath: "./docs"
+    - name: ui5-middleware-serveframework
+      afterMiddleware: compression
+    - name: ui5-middleware-simpleproxy
+      afterMiddleware: compression
+      mountPath: /openui5sdk
+      configuration:
+        baseUri: "https://sdk.openui5.org/"
+    - name: "@ui5/middleware-code-coverage"
+      afterMiddleware: compression
+    - name: ui5-middleware-livereload
+      afterMiddleware: compression
+# Read more about project shims here: https://sap.github.io/ui5-tooling/pages/extensibility/ProjectShims/
+#---
+#specVersion: "3.0"
+#kind: extension
+#type: project-shim
+#metadata:
+#  name: ui5erslive.app.marked
+#shims:
+#  configurations:
+#    marked: # dependency name as defined in package.json
+#      specVersion: "3.0"
+#      type: module # module type
+#      metadata:
+#        name: marked
+#      resources:
+#        configuration:
+#          paths:
+#            "/resources/marked/": "" # map root directory of marked module into resources path

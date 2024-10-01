@@ -1,0 +1,35 @@
+<mvc:View
+	controllerName="ui5erslive.app.controller.Main"
+	displayBlock="true"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+  xmlns:ui5erslivelib="ui5erslive.lib"
+  xmlns:control="ui5erslive.app.control"
+	core:require="{
+		formatter: 'ui5erslive/app/model/formatter'
+	}">
+
+	<Page
+		title="{i18n>appTitle}"
+		id="page">
+		<content>
+       <Button id="navToComp"
+      text="{formatter: 'formatter.formatValue', path: 'i18n>btnText'}"
+      press="navTo('comp')" />
+        <control:MDViewer id="mdViewer" content="*Hello XXX*" />
+        <ui5erslivelib:Example text="XXX"/>
+        <!--
+        <List id="versionList" items="{/}">
+          <items>
+            <StandardListItem
+              title="{version}"
+              description="{= ${support} }" />
+          </items>
+      </List>
+      -->
+
+		</content>
+	</Page>
+
+</mvc:View>
